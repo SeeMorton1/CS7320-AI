@@ -123,13 +123,13 @@ def Breadth_first_search():
         s = find_actions(curr.pos)
         
         for i in s:
-            
+            n = Node(i,parent=curr,action=determine_action(curr.pos,i),cost = 1)
+            if n.pos ==  mh.find_pos(maze,what="G"): return n
             if i not in posTraveled:
                 posTraveled.append(i)
-                n = Node(i,parent=curr,action=determine_action(curr.pos,i),cost = 1)
+                
                 frontier.extend(n)
-            
-        
-        #frontier.extend()
-        
+    return None
 
+def depth_first_search():
+    
