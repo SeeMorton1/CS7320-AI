@@ -1,5 +1,7 @@
 from typing import Deque
 from collections import deque
+
+from numpy.core.einsumfunc import _parse_possible_contraction
 import maze_helper as mh
 
 class Node:
@@ -132,4 +134,20 @@ def Breadth_first_search():
     return None
 
 def depth_first_search():
-    
+    frontier = [Node(mh.find_pos(maze,what="S"),parent=None,action=None,cost=0)]
+    goalPos = mh.find_pos(maze,what="G")
+    posTraveled = []
+    while frontier:
+        n = frontier.pop()
+        if n.pos == goalPos:
+            return n
+        s = find_actions(n.pos)
+        for i in s:
+            iN = Node(i,parent=n,action=determine_action(n.pos,i),cost = 1)
+            if iN.pos == goalPos:
+                return iN
+            if i not in posTraveled:
+                posTraveled.append(i)
+                frontier.extend(iN)
+
+    return None
